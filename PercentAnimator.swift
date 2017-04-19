@@ -78,6 +78,17 @@ class CubicBezierAnimator: BezierAnimator{
         let y = yFirstExpression+ySecondExpresion+yThirdExpression+yFourthExpression
         return CGPoint(x: x, y: y)
     }
+    func getOrientation(atPercent p: Double) -> CGPoint{
+        let xFirstExpression = 3*pow((1-p), 2) * Double(firstControlPoint.x - startingPoint.x)
+        let xSecondExpression = 6*(1-p)*p * Double(secondControlPoint.x - firstControlPoint.x)
+        let xThirdExpression = 3*pow(p, 2) * Double(endingPoint.x - secondControlPoint.x)
+        let x = xFirstExpression + xSecondExpression + xThirdExpression
+        let yFirstExpression = 3*pow((1-p), 2) * Double(firstControlPoint.y - startingPoint.y)
+        let ySecondExpression = 6*(1-p)*p * Double(secondControlPoint.y - firstControlPoint.y)
+        let yThirdExpression = 3*pow(p, 2) * Double(endingPoint.y - secondControlPoint.y)
+        let y = yFirstExpression + ySecondExpression + yThirdExpression
+        return CGPoint(x: x, y: y)
+    }
 }
 class QuadraticBezierAnimator: BezierAnimator{
     var controlPoint: CGPoint = CGPoint.zero
@@ -94,6 +105,15 @@ class QuadraticBezierAnimator: BezierAnimator{
         let secondExpessionY = 2.0*(1.0-p)*p*Double(controlPoint.y)
         let thirdExpressionY = pow(p, 2)*Double(endingPoint.y)
         let y = firstExpressionY+secondExpessionY+thirdExpressionY
+        return CGPoint(x: x, y: y)
+    }
+    func getOrientation(atPercent p: Double) -> CGPoint{
+        let xFirstExpression = 2*(1-CGFloat(p))*(controlPoint.x - startingPoint.x)
+        let xSecondExpression = 2*CGFloat(p)*(endingPoint.x - controlPoint.x)
+        let x = xFirstExpression + xSecondExpression
+        let yFirstExpression = 2*(1-CGFloat(p))*(controlPoint.y - startingPoint.y)
+        let ySecondExpression = 2*CGFloat(p)*(endingPoint.y - controlPoint.y)
+        let y = yFirstExpression + ySecondExpression
         return CGPoint(x: x, y: y)
     }
 }
